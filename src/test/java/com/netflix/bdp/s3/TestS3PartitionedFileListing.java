@@ -24,16 +24,13 @@ import org.junit.Assert;
 import org.junit.Test;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 import static com.netflix.bdp.s3.util.Paths.getRelativePath;
 
 public class TestS3PartitionedFileListing extends TestUtil.TaskCommitterTest<S3PartitionedOutputCommitter> {
-  @Override
-  S3PartitionedOutputCommitter newJobCommitter() throws IOException {
-    return new S3PartitionedOutputCommitter(OUTPUT_PATH, getJob());
-  }
 
   @Override
   S3PartitionedOutputCommitter newTaskCommitter() throws IOException {
@@ -65,6 +62,8 @@ public class TestS3PartitionedFileListing extends TestUtil.TaskCommitterTest<S3P
       String relative = getRelativePath(attemptPath, stat.getPath());
       actualFiles.add(relative);
     }
+    Collections.sort(expectedFiles);
+    Collections.sort(actualFiles);
 
     Assert.assertEquals("File sets should match", expectedFiles, actualFiles);
 
@@ -107,5 +106,10 @@ public class TestS3PartitionedFileListing extends TestUtil.TaskCommitterTest<S3P
     Assert.assertEquals("File sets should match", expectedFiles, actualFiles);
 
     attemptFS.delete(attemptPath, true);
+  }
+
+  @Override
+  S3PartitionedOutputCommitter newJobCommitter() throws Exception {
+    return null;
   }
 }

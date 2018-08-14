@@ -38,7 +38,7 @@ class MockedS3Committer extends S3MultipartOutputCommitter {
 
   public MockedS3Committer(Path outputPath, JobContext context)
       throws IOException {
-    super(outputPath, context);
+    super(outputPath, null);
   }
 
   public MockedS3Committer(Path outputPath, TaskAttemptContext context)

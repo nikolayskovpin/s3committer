@@ -30,7 +30,7 @@ import static org.mockito.Mockito.when;
 public class TestS3DirectoryOutputCommitter extends TestUtil.JobCommitterTest<S3DirectoryOutputCommitter> {
   @Override
   S3DirectoryOutputCommitter newJobCommitter() throws Exception {
-    return new S3DirectoryOutputCommitter(OUTPUT_PATH, getJob());
+    return new S3DirectoryOutputCommitter(OUTPUT_PATH, null);
   }
 
   @Test

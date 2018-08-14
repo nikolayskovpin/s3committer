@@ -41,7 +41,7 @@ import static org.mockito.Mockito.when;
 public class TestS3PartitionedTaskCommit extends TestUtil.TaskCommitterTest<S3PartitionedOutputCommitter> {
   @Override
   S3PartitionedOutputCommitter newJobCommitter() throws IOException {
-    return new S3PartitionedOutputCommitter(OUTPUT_PATH, getJob());
+    return new S3PartitionedOutputCommitter(OUTPUT_PATH, null);
   }
 
   @Override

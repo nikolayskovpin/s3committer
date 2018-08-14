@@ -47,7 +47,7 @@ public class TestS3PartitionedJobCommit extends TestUtil.JobCommitterTest<S3Part
     private final AmazonS3 client;
     private TestPartitionedOutputCommitter(JobContext context, AmazonS3 client)
         throws IOException {
-      super(OUTPUT_PATH, context);
+      super(OUTPUT_PATH, null);
       this.client = client;
     }
 

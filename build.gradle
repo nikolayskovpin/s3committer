@@ -22,13 +22,11 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'nebula.javadoc-jar'
-apply plugin: 'nebula.source-jar'
 apply plugin: 'maven' // make pom files for deployment
 apply plugin: 'com.github.johnrengelman.shadow'
 
 group = "com.netflix.bdp.s3"
-version = '0.5.5'
+version = '0.5.6'
 
 repositories {
   mavenCentral()
@@ -45,11 +43,12 @@ sourceCompatibility = '1.7'
 targetCompatibility = '1.7'
 
 dependencies {
-  provided 'com.amazonaws:aws-java-sdk-s3:1.11.15'
+  provided 'com.amazonaws:aws-java-sdk:1.11.179'
   provided 'org.slf4j:slf4j-api:1.7.5'
   provided 'org.apache.hadoop:hadoop-client:2.7.2'
   provided 'org.apache.hadoop:hadoop-aws:2.7.2'
   provided 'com.google.guava:guava:11.0.2'
+  provided 'org.apache.parquet:parquet-hadoop:1.8.3'
 
   testCompile 'org.apache.hadoop:hadoop-hdfs:2.7.2:tests'
   testCompile 'org.apache.hadoop:hadoop-common:2.7.2:tests'
@@ -64,4 +63,26 @@ shadowJar {
 
   configurations = [project.configurations.shadow]
   from(project.sourceSets.main.output)
+}
+
+
+apply plugin: 'maven-publish'
+ext {
+  jarToPublish = file('./build/libs/s3committer-0.5.6.jar')
+}
+publishing {
+  publications {
+    yourPublicationNameHere( MavenPublication ) {
+      artifact jarToPublish
+    }
+  }
+  repositories {
+    maven {
+      url "https://nexus.gilt.com/nexus/content/repositories/thirdparty/"
+      credentials {
+        username 'changeme'
+        password 'changeme'
+      }
+    }
+  }
 }
